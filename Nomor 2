@@ -1,0 +1,36 @@
+def dense_ranking(scores, gits_scores):
+    scores_set = sorted(set(scores), reverse=True)
+    ranking = {}
+
+    for i, score in enumerate(scores_set, start=1):
+        ranking[score] = i
+
+    gits_ranks = []
+    for gits_score in gits_scores:
+        if gits_score in ranking:
+            gits_rank = ranking[gits_score]
+        elif gits_score > scores_set[0]:
+            gits_rank = 1
+        else:
+            for i, score in enumerate(scores_set):
+                if gits_score < score:
+                    gits_rank = ranking[score] + 1
+                    break
+        gits_ranks.append(gits_rank)
+
+    return gits_ranks
+
+
+if __name__ == "__main__":
+    try:
+        num_players = int(input("Jumlah pemain: "))
+        scores = list(map(int, input("Daftar skor pemain (pisahkan dengan spasi): ").split()))
+        num_games = int(input("Jumlah permainan GITS: "))
+        gits_scores = list(map(int, input("Skor permainan GITS (pisahkan dengan spasi): ").split()))
+
+        ranks = dense_ranking(scores, gits_scores)
+        print("Sampel Output:")
+        print(*ranks)
+
+    except ValueError:
+        print("Error: Pastikan Anda memasukkan input yang sesuai dengan format yang diminta.")
