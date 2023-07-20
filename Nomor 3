@@ -1,0 +1,22 @@
+def is_balanced_bracket(s):
+    stack = []
+    open_brackets = "({["
+    close_brackets = ")}]"
+    bracket_pairs = {')': '(', '}': '{', ']': '['}
+
+    for char in s:
+        if char in open_brackets:
+            stack.append(char)
+        elif char in close_brackets:
+            if not stack or stack[-1] != bracket_pairs[char]:
+                return "NO"
+            stack.pop()
+
+    return "YES" if not stack else "NO"
+
+if __name__ == "__main__":
+    try:
+        input_str = input("Input: ")
+        print("Output:", is_balanced_bracket(input_str))
+    except ValueError:
+        print("Error: Masukan tidak valid.")
